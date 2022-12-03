@@ -1,5 +1,11 @@
-function tocaSom(idElementoAudio) {
-  document.querySelector(idElementoAudio).play();
+function tocaSom(seletorAudio) {
+  const elemento = document.querySelector(seletorAudio);
+
+  if (elemento != null && elemento.localName === "audio") {
+    elemento.play();
+  } else {
+    console.log("Elemento de Audio não encontrado!");
+  }
 }
 
 /*
@@ -7,25 +13,6 @@ function tocaSom(idElementoAudio) {
 	no caso abaixo, pegou todos os botões.
 */
 const listaDeTeclas = document.querySelectorAll(".tecla");
-
-// let cont = 0;
-
-// while (cont < listaDeTeclas.length) {
-//   /*
-// 		para não ficar repetindo listaTe...[cont], atribui o elemento da interação a uma variavel,
-// 		que passa a ser manipulado atraves dessa variavel que recebeu o elemento atual do loop
-// 	*/
-//   let tecla = listaDeTeclas[cont];
-
-//   let classeSom = tecla.classList[1];
-
-//   let idAudio = `#som_${classeSom}`;
-
-//   tecla.onclick = function () {
-//     tocaSom(idAudio);
-//   };
-//   cont += 1;
-// }
 
 listaDeTeclas.forEach((tecla) => {
   let classeSom = tecla.classList[1];
@@ -35,4 +22,16 @@ listaDeTeclas.forEach((tecla) => {
   tecla.onclick = function () {
     tocaSom(idAudio);
   };
+
+  tecla.onkeydown = function (evento) {
+    if (evento.code === "Space" || evento.key === "Enter") {
+      tecla.classList.add("ativa");
+    }
+  };
+
+  tecla.onkeyup = function () {
+    tecla.classList.remove("ativa");
+  };
+
+  tecla.onkeypress = function (e) {};
 });
